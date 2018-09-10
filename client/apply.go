@@ -87,6 +87,12 @@ func (a *App) accept() {
 
 	//服务端成功开启代理服务通知
 	m.GET(netmsg.SUCCESS_START_PROXY, func(r *netmsg.Respone, err error) {
+		if err != nil {
+			log.WithFields(log.Fields{
+				"error": err,
+			}).Info("启动代理服务失败...")
+			return
+		}
 		var proxy netmsg.Proxy
 		msg := r.Msg
 		err = msgpack.Unmarshal(msg, &proxy)
