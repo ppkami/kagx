@@ -41,7 +41,9 @@ func (a *App) connectSuperise() {
 
 	//连接监管服务器
 	raddr, _ := net.ResolveUDPAddr("udp", fmt.Sprintf("%s:%d", ip, port))
-	conn, _ := net.DialUDP("udp", nil, raddr)
+	laddr, _ := net.ResolveUDPAddr("udp", fmt.Sprintf("%s:%d", net.IPv4zero, 40001))
+	conn, _ := net.DialUDP("udp", laddr, raddr)
+
 	a.conn = conn
 }
 

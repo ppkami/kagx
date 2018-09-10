@@ -6,7 +6,7 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp, http �
 
 目前为学习项目，供研究学习，慎用于生产环境中
 
-## 创建
+## 使用
 
 1. 将项目git clone到本地$GOPATH环境中
 
@@ -20,7 +20,12 @@ $ cd $GOPATH/src/github.com/ppkami/kagx
 $ make build
 ```
 
-`$GOPATH/src/github.com/ppkami/kagx/bin`目录下会生成两个执行文件, 分别是服务端应用`kags`和客户端应用`kagc`
+`$GOPATH/src/github.com/ppkami/kagx/bin`目录下会生成两个执行文件, 分别是服务端应用`kags_*_*`和客户端应用`kagc_*_*`, 根据服务器操作系统使用对应的执行文件。你可重命名文件，比如你是linux 64操作系统，则可以执行
+
+```
+$ mv kags_linux_amd64 kags
+$ mv kagc_linux_amd64 kagc
+```
 
 3. 配置文件
 
@@ -29,7 +34,7 @@ $ make build
 服务器配置文件`kagxs.ini`
 
 ```
-port=9595##服务器监管服务端口
+port=40000##服务器监管服务端口
 token=kagx##验证码，用于数据安全校验
 ```
 
@@ -37,12 +42,12 @@ token=kagx##验证码，用于数据安全校验
 
 ```
 ip=x.x.x.x##服务器ip
-supervise_port=9595##服务器监管服务端口
+supervise_port=40000##服务器监管服务端口
 token=kagx##验证码，用于数据安全校验
 
-##外网用户访问的x.x.x.x:6000，数据将会转发到客户端本地127.0.0.1:22
+##外网用户访问的x.x.x.x:30000，数据将会转发到客户端本地127.0.0.1:22
 [ssh]
-remote_port=6000##服务器代理端口
+remote_port=30000##服务器代理端口
 local_ip=127.0.0.1##客户端本地代理ip，可以是客户端本机，或者局域网的某台服务器
 local_port=22##客户端本地代理端口
 ```
@@ -68,7 +73,7 @@ $ YOUR_BIN_PATH/kagxc -c YOUR_CONFIGURE_PATH/kagxc.ini
 本实例为ssh，所以执行
 
 ```
-$ ssh -p 6000 username@x.x.x.x
+$ ssh -p 30000 username@x.x.x.x
 ```
 
-其中username为你本地主机的登陆用户名，x.x.x.x为线上服务器ip，6000为线上服务器代理端口并转发本地主机ssh端口22
+其中username为你本地主机的登陆用户名，x.x.x.x为线上服务器ip，30000为线上服务器代理端口并转发本地主机ssh端口22
