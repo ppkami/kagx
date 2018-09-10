@@ -83,7 +83,7 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp, http �
     假设你的线上服务器IP是`x.x.x.x`， 登陆服务器后，创建配置文件`/usr/local/kagx/conf/kagxs.ini`，参照[服务端配置文件](#配置文件)
 
     ```
-    $ docker run --name kagxs -d -p 40000:40000/udp -v /usr/local/kagx/conf/kagxs.ini:/usr/local/kagx/conf/kagxs.ini pjy20050506/kagx:server-0.0.1
+    $ docker run --name kagxs -d -p 40000:40000/udp -p 30000-30010:30000-30010 -v /usr/local/kagx/conf/kagxs.ini:/usr/local/kagx/conf/kagxs.ini pjy20050506/kagx:server-0.0.1
     ```
 
 2. 客户端
@@ -94,7 +94,7 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp, http �
     $ docker run --name kagxc -d -P -v /usr/local/kagx/conf/kagxc.ini:/usr/local/kagx/conf/kagxc.ini pjy20050506/kagx:client-0.0.1
     ```
 
-    ##注意：##kagxc.ini配置文件中local_ip不要写成127.0.0.1，因为执行kagx客户端是在docker容器中，应将127.0.0.1改成客户端主机在局域网中的ip地址，比如192.168.1.105
+    *注意：* kagxc.ini配置文件中local_ip不要写成127.0.0.1，因为执行kagx客户端是在docker容器中，应将127.0.0.1改成客户端主机在局域网中的ip地址，比如192.168.1.105
 
 6. 外网访问
 
