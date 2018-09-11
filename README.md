@@ -175,7 +175,6 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp 协议�
         listen 80;
         server_name ghost.domain.com;
 
-
         location / {
             proxy_pass http://127.0.0.1:30001;
             proxy_set_header Host $host;
