@@ -1,6 +1,6 @@
 # kagx
 
-kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp, http 协议。
+kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp 协议。
 
 ## 开发状态
 
@@ -29,7 +29,7 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp, http �
     local_port=22##客户端本地代理端口
     ```
 
-## 使用
+## 快速搭建
 
 1. 将项目git clone到本地$GOPATH环境中
 
@@ -94,7 +94,7 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp, http �
     $ docker run --name kagxc -d -P -v /usr/local/kagx/conf/kagxc.ini:/usr/local/kagx/conf/kagxc.ini pjy20050506/kagx:client-0.0.1
     ```
 
-    *注意：* kagxc.ini配置文件中local_ip不要写成127.0.0.1，因为执行kagx客户端是在docker容器中，应将127.0.0.1改成客户端主机在局域网中的ip地址，比如192.168.1.105
+    _注意：_ kagxc.ini配置文件中local_ip不要写成127.0.0.1，因为执行kagx客户端是在docker容器中，应将127.0.0.1改成客户端主机在局域网中的ip地址，比如192.168.1.105
 
 6. 外网访问
 
@@ -105,3 +105,68 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp, http �
     ```
 
     其中username为你本地主机的登陆用户名，x.x.x.x为线上服务器ip，30000为线上服务器代理端口并转发本地主机ssh端口22
+
+## http web站点搭建示例
+
+基于kagx搭建http内网穿透，示例以[ghost](https://github.com/TryGhost/Ghost)为web项目，配合nginx，搭建外网能访问的博客网站
+
+1. 客户端搭建ghost
+
+    参考[ghost](https://github.com/TryGhost/Ghost)，快速搭建`ghost install local`，完成后确保在客户端能访问http://127.0.0.1:2368
+
+2. 客户端kagxc.ini配置
+
+    ```
+    ip=x.x.x.x##服务器ip
+    supervise_port=40000##服务器监管服务端口
+    token=kagx##验证码，用于数据安全校验
+
+    ##外网用户访问的x.x.x.x:30001，数据将会转发到客户端本地127.0.0.1:2368
+    [ghost]
+    remote_port=30001##服务器代理端口
+    local_ip=127.0.0.1##ghost站点ip
+    local_port=2368##ghost服务端口
+
+    ```
+
+    执行kagxc
+
+    ```
+    $ /usr/local/kagx/kagxc -c /usr/local/kagx/conf/kagxc.ini
+    ```
+
+3. 服务器端kagxs.ini配置
+
+    ```
+    port=40000##服务器监管服务端口
+    token=kagx##验证码，用于数据安全校验
+    ```
+
+    执行kagxs
+
+    ```
+    $ /usr/local/kagx/kagxs -c /usr/local/kagx/conf/kagxs.ini
+    ```
+
+    假设你的线上服务器ip是x.x.x.x，这是你访问http://x.x.x.x:30001，将会是转发客户端ghost站点
+
+4. 服务器nginx配置
+
+    配合nginx使用，外网则能通过域名访问站点
+
+    ```
+    server {
+        listen 80;
+        server_name ghost.domain.com;
+
+
+        location / {
+            proxy_pass http://127.0.0.1:30001;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+    ```
+
+    重置nginx后，访问http://ghost.domain.com/将会是ghost站点
