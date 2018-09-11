@@ -142,7 +142,7 @@ func (p *Proxy) Run() error {
 func (p *Proxy) handleConn(conn net.Conn, connMuxChan chan int) {
 	//获取请求数据判断是客户端转发请求，还是外网用户请求
 	mark := make([]byte, 25)
-	conn.Read(mark)
+	i, _ := conn.Read(mark)
 
 	//客户端转发连接
 	if netmsg.IsForwardConn(mark, p.token) {
@@ -155,7 +155,7 @@ func (p *Proxy) handleConn(conn net.Conn, connMuxChan chan int) {
 		p.visitor <- 1
 		//----获取客户端的代理请求，进行数据交换----//
 		forwardConn := <-p.forwardConn
-		forwardConn.Write(mark) //预读的验证数据发送给客户端，以免用户请求数据发送给客户端缺失
+		forwardConn.Write(mark[:i]) //预读的验证数据发送给客户端，以免用户请求数据发送给客户端缺失
 		var wait sync.WaitGroup
 		wait.Add(2)
 		go pipe(conn, forwardConn, wait)
