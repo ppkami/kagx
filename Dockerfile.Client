@@ -1,6 +1,6 @@
 FROM alpine:3.8
 
-ENV KAGX_VERSION 0.0.1
+ENV KAGX_VERSION 0.0.1.2
 
 RUN wget http://petlludhz.bkt.clouddn.com/kagx_v${KAGX_VERSION}_linux_amd64.tar.gz
 RUN tar xzf kagx_v${KAGX_VERSION}_linux_amd64.tar.gz &&\
