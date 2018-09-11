@@ -11,22 +11,30 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp 协议�
 * 服务端kagxs.ini
 
     ```
-    port=40000##服务器监管服务端口
-    token=kagx##验证码，用于数据安全校验
+    # 服务器监管服务端口
+    port=40000
+    # 验证码，用于数据安全校验
+    token=kagx
     ```
 
 * 客户端kagxc.ini
 
     ```
-    ip=x.x.x.x##服务器ip
-    supervise_port=40000##服务器监管服务端口
-    token=kagx##验证码，用于数据安全校验
+    # 服务器ip
+    ip=x.x.x.x
+    # 服务器监管服务端口
+    supervise_port=40000
+    # 验证码，用于数据安全校验
+    token=kagx
 
-    ##外网用户访问的x.x.x.x:30000，数据将会转发到客户端本地127.0.0.1:22
+    # 外网用户访问的x.x.x.x:30000，数据将会转发到客户端本地127.0.0.1:22
     [ssh]
-    remote_port=30000##服务器代理端口
-    local_ip=127.0.0.1##客户端本地代理ip，可以是客户端本机，或者局域网的某台服务器
-    local_port=22##客户端本地代理端口
+    # 服务器代理端口
+    remote_port=30000
+    # 客户端本地代理ip，可以是客户端本机，或者局域网的某台服务器
+    local_ip=127.0.0.1
+    # 客户端本地代理端口
+    local_port=22
     ```
 
 ## 快速搭建
@@ -117,15 +125,21 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp 协议�
 2. 客户端kagxc.ini配置
 
     ```
-    ip=x.x.x.x##服务器ip
-    supervise_port=40000##服务器监管服务端口
-    token=kagx##验证码，用于数据安全校验
+    # 服务器ip
+    ip=x.x.x.x
+    # 服务器监管服务端口
+    supervise_port=40000
+    # 验证码，用于数据安全校验
+    token=kagx
 
-    ##外网用户访问的x.x.x.x:30001，数据将会转发到客户端本地127.0.0.1:2368
+    # 外网用户访问的x.x.x.x:30001，数据将会转发到客户端本地127.0.0.1:2368
     [ghost]
-    remote_port=30001##服务器代理端口
-    local_ip=127.0.0.1##ghost站点ip
-    local_port=2368##ghost服务端口
+    # 服务器代理端口
+    remote_port=30001
+    # ghost站点ip
+    local_ip=127.0.0.1
+    # ghost服务端口
+    local_port=2368
 
     ```
 
@@ -138,8 +152,10 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp 协议�
 3. 服务器端kagxs.ini配置
 
     ```
-    port=40000##服务器监管服务端口
-    token=kagx##验证码，用于数据安全校验
+    # 服务器监管服务端口
+    port=40000
+    # 验证码，用于数据安全校验
+    token=kagx
     ```
 
     执行kagxs
@@ -148,7 +164,7 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp 协议�
     $ /usr/local/kagx/kagxs -c /usr/local/kagx/conf/kagxs.ini
     ```
 
-    假设你的线上服务器ip是x.x.x.x，这是你访问http://x.x.x.x:30001，将会是转发客户端ghost站点
+    假设你的线上服务器ip是x.x.x.x, 这是你访问http://x.x.x.x:30001, 将会是转发客户端ghost站点
 
 4. 服务器nginx配置
 
@@ -169,4 +185,4 @@ kagx 一个可用于内网穿透的反向代理应用，目前支持 tcp 协议�
     }
     ```
 
-    重置nginx后，访问http://ghost.domain.com/将会是ghost站点
+    重置nginx后，访问`http://ghost.domain.com/`将会是ghost站点
