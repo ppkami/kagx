@@ -1,0 +1,17 @@
+FROM arm64v8/alpine:3.9
+
+ENV KAGX_VERSION 0.0.1
+
+RUN mkdir /usr/local/kagx && mkdir /usr/local/kagx/conf && mkdir /usr/local/kagx/bin
+RUN wget https://github.com/ppkami/kagx/releases/download/v${KAGX_VERSION}/kagxs_linux_arm64.tar.gz
+RUN tar xzf kagxs_linux_arm64.tar.gz &&\
+    mv kagxs_linux_arm64 /usr/local/kagx/bin/kagxs &&\
+    rm kagxs_linux_arm64.tar.gz
+
+VOLUME /usr/local/kagx/conf
+
+WORKDIR /usr/local/kagx
+
+EXPOSE 40000/udp
+
+ENTRYPOINT ["/usr/local/kagx/bin/kagxs"]

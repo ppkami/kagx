@@ -31,11 +31,11 @@ pkg:
 	go get -d github.com/satori/go.uuid
 
 tar:
-	tar -zcvf bin/kagxc_darwin_amd64.tar.gz bin/kagxc_darwin_amd64
-	tar -zcvf bin/kagxc_linux_amd64.tar.gz bin/kagxc_linux_amd64
-	tar -zcvf bin/kagxc_linux_arm64.tar.gz bin/kagxc_linux_arm64
-	tar -zcvf bin/kagxc_windows_amd64.tar.gz bin/kagxc_windows_amd64
-	tar -zcvf bin/kagxs_darwin_amd64.tar.gz bin/kagxs_darwin_amd64
-	tar -zcvf bin/kagxs_linux_amd64.tar.gz bin/kagxs_linux_amd64
-	tar -zcvf bin/kagxs_linux_arm64.tar.gz bin/kagxs_linux_arm64
-	tar -zcvf bin/kagxs_windows_amd64.tar.gz bin/kagxs_windows_amd64
+	tar -zcvf bin/kagxc_darwin_amd64.tar.gz -C bin kagxc_darwin_amd64
+	tar -zcvf bin/kagxc_linux_amd64.tar.gz -C bin kagxc_linux_amd64
+	tar -zcvf bin/kagxc_linux_arm64.tar.gz -C bin kagxc_linux_arm64
+	tar -zcvf bin/kagxc_windows_amd64.tar.gz -C bin kagxc_windows_amd64
+	tar -zcvf bin/kagxs_darwin_amd64.tar.gz -C bin kagxs_darwin_amd64
+	tar -zcvf bin/kagxs_linux_amd64.tar.gz -C bin kagxs_linux_amd64
+	tar -zcvf bin/kagxs_linux_arm64.tar.gz -C bin kagxs_linux_arm64
+	tar -zcvf bin/kagxs_windows_amd64.tar.gz -C bin kagxs_windows_amd64
