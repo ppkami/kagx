@@ -11,12 +11,14 @@ kagxc:
 	env CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -ldflags "$(LDFLAGS)" -o bin/kagxc_darwin_amd64 ./cmd/kagxc
 	env CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "$(LDFLAGS)" -o bin/kagxc_linux_amd64 ./cmd/kagxc
 	env CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -ldflags "$(LDFLAGS)" -o bin/kagxc_windows_amd64 ./cmd/kagxc
+	env CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags "$(LDFLAGS)" -o bin/kagxc_linux_arm64 ./cmd/kagxc
 
 #客户端
 kagxs:
 	env CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -ldflags "$(LDFLAGS)" -o bin/kagxs_darwin_amd64 ./cmd/kagxs
 	env CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "$(LDFLAGS)" -o bin/kagxs_linux_amd64 ./cmd/kagxs
 	env CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -ldflags "$(LDFLAGS)" -o bin/kagxs_windows_amd64 ./cmd/kagxs
+	env CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -ldflags "$(LDFLAGS)" -o bin/kagxs_linux_arm64 ./cmd/kagxs
 
 clean:
 	rm -rf ./bin/*
@@ -31,7 +33,9 @@ pkg:
 tar:
 	tar -zcvf bin/kagxc_darwin_amd64.tar.gz bin/kagxc_darwin_amd64
 	tar -zcvf bin/kagxc_linux_amd64.tar.gz bin/kagxc_linux_amd64
+	tar -zcvf bin/kagxc_linux_arm64.tar.gz bin/kagxc_linux_arm64
 	tar -zcvf bin/kagxc_windows_amd64.tar.gz bin/kagxc_windows_amd64
 	tar -zcvf bin/kagxs_darwin_amd64.tar.gz bin/kagxs_darwin_amd64
 	tar -zcvf bin/kagxs_linux_amd64.tar.gz bin/kagxs_linux_amd64
+	tar -zcvf bin/kagxs_linux_arm64.tar.gz bin/kagxs_linux_arm64
 	tar -zcvf bin/kagxs_windows_amd64.tar.gz bin/kagxs_windows_amd64
